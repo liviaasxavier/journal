@@ -176,7 +176,8 @@ export function Formulario({ campos, inicial, onSalvar, onApagar }) {
     const dados = {}
     for (const campo of campos) {
       const v = valores[campo.nome]
-      if (campo.tipo === 'numero') dados[campo.nome] = v === '' || v === null ? null : Number(v)
+      // numero e estrelas viram número; campo vazio vira null (coluna numérica não aceita texto vazio)
+      if (campo.tipo === 'numero' || campo.tipo === 'estrelas') dados[campo.nome] = v === '' || v === null ? null : Number(v)
       else if (campo.tipo === 'tags') dados[campo.nome] = textoParaTags(v)
       else if (campo.tipo === 'data' || campo.tipo === 'url' || campo.tipo === 'select')
         dados[campo.nome] = v === '' ? (campo.padrao ?? null) : v
