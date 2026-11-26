@@ -1,0 +1,32 @@
+Coloque aqui os ícones em PNG (fundo transparente, quadrados, de preferência 128x128 ou maiores).
+O nome do arquivo tem que ser EXATAMENTE um destes. Enquanto um arquivo não existir, o site mostra o emoji no lugar.
+
+MENU / MÓDULOS (15)
+inicio.png       Início
+agenda.png       Agenda
+todo.png         To-do
+habitos.png      Hábitos
+diario.png       Diário
+faculdade.png    Faculdade
+topicos.png      Tópicos
+caderninho.png   Caderninho
+metas.png        Metas
+ideias.png       Ideias
+wishlist.png     Wishlist
+receitas.png     Receitas
+midia.png        Livros & séries
+links.png        Links salvos
+adesivos.png     Adesivos
+
+DETALHES DA INTERFACE (8)
+logo.png         selo do logo e do login (hoje é 🌷)
+laco.png         lacinho do item ativo no menu (hoje é 🎀)
+menu.png         botão de abrir o menu no celular (hoje é ☰)
+sair.png         botão sair (hoje é 👋)
+construcao.png   página "em construção" (hoje é 🧸)
+manha.png        saudação de bom dia (hoje é ☀️)
+tarde.png        saudação de boa tarde (hoje é 🌤️)
+noite.png        saudação de boa noite (hoje é 🌙)
+
+EXTRAS (guardados para usar depois, em public/icones/extras/)
+coracao.png, rosa.png, flor.png, estrela.png, estrelas.png, cerejas.png

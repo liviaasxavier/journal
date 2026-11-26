@@ -1,0 +1,1220 @@
+/* =========================================================
+   journal — tema visual "scrapbook vintage"
+   As cores e fontes ficam em variáveis no :root; o restante do arquivo usa var(--nome).
+   ========================================================= */
+:root {
+  /* papéis e fundo */
+  --fundo: #f6e6e4;         /* fundo da página */
+  --papel: #fff8f6;         /* fundo dos cartões */
+  --papel-escuro: #f9e2e3;  /* fundo do menu lateral */
+  --borda: #efd0d4;
+
+  /* texto */
+  --texto: #6a3e4a;         /* cor principal do texto */
+  --suave: #b88d97;
+
+  /* paleta */
+  --rosa: #fadbe0;
+  --rosa-antigo: #e2a3b0;
+  --malva: #c98ca1;
+  --lavanda: #ead7ee;
+  --salvia: #dfe2cf;
+  --pessego: #fad5cd;
+  --bege: #f3ddd5;
+  --vinho: #9b3c56;
+  --dourado: #c9a066;
+
+  /* xadrez (usado em .xadrez, na lombada do menu e no topo do celular) */
+  --xadrez: rgba(226, 140, 162, 0.3);
+  --xadrez-base: #fdf2f4;
+
+  /* fontes */
+  --f-titulo: 'Playfair Display', Georgia, serif;
+  --f-mao: 'Caveat', 'Segoe Print', cursive;
+  --f-maquina: 'Special Elite', 'Courier New', monospace;
+  --f-texto: 'Nunito', system-ui, sans-serif;
+
+  --raio: 6px;
+  --sombra: 0 1px 2px rgba(91, 64, 68, 0.08), 0 6px 16px rgba(91, 64, 68, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--f-texto);
+  color: var(--texto);
+  background-color: var(--fundo);
+  /* fundo pontilhado, estilo bullet journal */
+  background-image: radial-gradient(rgba(201, 110, 135, 0.13) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+h1, h2, h3 {
+  font-family: var(--f-titulo);
+  font-weight: 600;
+  color: var(--vinho);
+  margin: 0 0 0.3em;
+  line-height: 1.15;
+}
+h1 { font-size: 2.2rem; font-style: italic; }
+a { color: inherit; text-decoration: none; }
+code { background: var(--lavanda); padding: 1px 6px; border-radius: 4px; }
+
+.suave { color: var(--suave); margin-top: 0; }
+.erro { color: var(--vinho); font-size: 0.9rem; margin: 0; }
+
+/* cores utilitárias: class="bg-rosa" etc.
+   !important para que a cor prevaleça sobre o fundo padrão de .card e .chip. */
+.bg-rosa { background-color: var(--rosa) !important; }
+.bg-rosa-antigo { background-color: var(--rosa-antigo) !important; }
+.bg-malva { background-color: #ecc9d5 !important; }
+.bg-rosa-claro { background-color: #fdeaed !important; }
+.bg-lavanda { background-color: var(--lavanda) !important; }
+.bg-salvia { background-color: var(--salvia) !important; }
+.bg-pessego { background-color: var(--pessego) !important; }
+.bg-bege { background-color: var(--bege) !important; }
+
+/* paleta principal (agenda, listas, hábitos, matérias, metas e humores) */
+:root {
+  --laranja: #fbd2b4; --amarelo: #f9e7a1; --verde: #cde5c1; --azul: #c6dcf3; --roxo: #d9c8ee; --vermelho: #f5bcbc;
+  /* versões mais saturadas, para pontos, mapa de hábitos e gráficos (o pastel tem pouco contraste) */
+  --rosa-forte: #d9607c; --laranja-forte: #e98a45; --amarelo-forte: #c49a12; --verde-forte: #5fa651;
+  --azul-forte: #4f8fd8; --roxo-forte: #8f67cf; --vermelho-forte: #d24b4b;
+}
+.bg-vermelho { background-color: var(--vermelho) !important; }
+.bg-laranja { background-color: var(--laranja) !important; }
+.bg-amarelo { background-color: var(--amarelo) !important; }
+.bg-verde { background-color: var(--verde) !important; }
+.bg-azul { background-color: var(--azul) !important; }
+.bg-roxo { background-color: var(--roxo) !important; }
+
+/* =========================================================
+   PEÇAS DE SCRAPBOOK (classes reutilizáveis)
+   ========================================================= */
+
+/* folha de papel */
+.card {
+  position: relative;
+  background-color: var(--papel);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+}
+
+/* papel pautado, com a margem rosa à esquerda */
+.pautado {
+  background-image:
+    linear-gradient(90deg, transparent 2.2rem, rgba(201, 110, 135, 0.55) 2.2rem, rgba(201, 110, 135, 0.55) calc(2.2rem + 1px), transparent calc(2.2rem + 1px)),
+    repeating-linear-gradient(transparent 0 1.75rem, rgba(222, 150, 170, 0.4) 1.75rem calc(1.75rem + 1px));
+  background-position: 0 0, 0 0.6rem;
+  line-height: 1.75rem;
+}
+
+/* papel quadriculado */
+.quadriculado {
+  background-image:
+    linear-gradient(rgba(222, 150, 170, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(222, 150, 170, 0.28) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* xadrez rosinha (gingham) */
+.xadrez {
+  background-color: var(--xadrez-base);
+  background-image:
+    linear-gradient(90deg, var(--xadrez) 50%, transparent 50%),
+    linear-gradient(var(--xadrez) 50%, transparent 50%);
+  background-size: 16px 16px;
+}
+
+/* fita washi no topo do elemento (desenhada no ::before).
+   Não combinar com .rasgado no mesmo elemento: o clip-path cortaria a fita.
+   Usar .fita no elemento externo e .rasgado no interno. */
+.fita { position: relative; }
+.fita::before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 84px;
+  height: 22px;
+  transform: translateX(-50%) rotate(var(--fita-giro, -3deg));
+  background-color: var(--fita-cor, rgba(226, 150, 170, 0.62));
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.28) 0 4px, transparent 4px 9px);
+  clip-path: polygon(0 0, 100% 0, 96% 20%, 100% 40%, 96% 60%, 100% 80%, 97% 100%, 0 100%, 4% 80%, 0 60%, 4% 40%, 0 20%);
+  z-index: 2;
+  pointer-events: none;
+}
+.fita-lavanda { --fita-cor: rgba(210, 180, 225, 0.7); }
+.fita-malva { --fita-cor: rgba(201, 140, 161, 0.6); }
+.fita-bege { --fita-cor: rgba(232, 196, 186, 0.8); }
+.fita-salvia { --fita-cor: rgba(176, 192, 160, 0.7); }
+
+/* borda de papel rasgado (em cima e embaixo) */
+.rasgado {
+  clip-path: polygon(
+    0% 3%, 6% 0.5%, 12% 2.5%, 19% 0%, 26% 2%, 33% 0.5%, 41% 3%, 48% 0.5%, 56% 2.5%, 63% 0%, 71% 2%, 78% 0.5%, 86% 3%, 93% 1%, 100% 2.5%,
+    100% 97.5%, 94% 100%, 87% 97.5%, 80% 99.5%, 72% 97%, 65% 99.5%, 57% 97.5%, 50% 100%, 42% 97%, 35% 99.5%, 27% 97.5%, 20% 100%, 13% 97%, 6% 99.5%, 0% 97%
+  );
+}
+
+/* selo de cera */
+.selo {
+  --selo-cor: var(--rosa-antigo);
+  width: 3.4rem;
+  height: 3.4rem;
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  font-size: 1.4rem;
+  border-radius: 47% 53% 50% 50% / 53% 47% 53% 47%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.45), transparent 40%), var(--selo-cor);
+  box-shadow:
+    inset 0 0 0 4px rgba(255, 255, 255, 0.18),
+    inset 0 0 0 7px rgba(0, 0, 0, 0.06),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.18),
+    0 2px 4px rgba(91, 64, 68, 0.3);
+}
+.selo-dourado { --selo-cor: var(--dourado); }
+.selo-vinho { --selo-cor: var(--vinho); }
+
+/* etiqueta de máquina de escrever */
+.etiqueta {
+  display: inline-block;
+  font-family: var(--f-maquina);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--texto);
+  background: var(--bege);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(91, 64, 68, 0.15);
+}
+
+/* letra de mão */
+.mao { font-family: var(--f-mao); font-size: 1.45em; line-height: 1.1; }
+
+/* =========================================================
+   COMPONENTES BÁSICOS
+   ========================================================= */
+.btn {
+  background: var(--vinho);
+  color: var(--papel);
+  border: none;
+  border-radius: 4px;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--f-maquina);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 2px 0 #76293f;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn:hover { background: #86324a; }
+.btn:active { transform: translateY(2px); box-shadow: none; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+
+.btn-icone {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--vinho);
+}
+
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+  border: none;
+  border-bottom: 1.5px dashed var(--rosa-antigo);
+  border-radius: 0;
+  padding: 0.55rem 0.3rem;
+  background: transparent;
+  outline: none;
+  width: 100%;
+}
+input:focus, textarea:focus, select:focus { border-bottom: 1.5px solid var(--vinho); }
+input::placeholder, textarea::placeholder { color: var(--suave); font-family: var(--f-mao); font-size: 1.3rem; }
+
+.tela-centro {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+/* ============ LOGIN ============ */
+.login {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  text-align: center;
+  padding: 2.2rem 1.8rem 2.6rem;
+}
+.login h1 { font-size: 2.6rem; margin: 0; }
+.login .mao { color: var(--malva); margin: -0.4rem 0 0.4rem; }
+.login .btn { margin-top: 0.6rem; }
+.login .selo { position: absolute; right: -14px; bottom: -14px; transform: rotate(10deg); }
+
+/* =========================================================
+   LAYOUT — o menu é a capa de um caderno
+   ========================================================= */
+.app { display: flex; min-height: 100vh; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--f-titulo);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--vinho);
+}
+.logo .selo { width: 2.4rem; height: 2.4rem; font-size: 1rem; }
+.selo .icone { width: 60%; height: 60%; }
+.logo-sub { display: block; font-family: var(--f-mao); font-style: normal; font-size: 1.1rem; color: var(--malva); font-weight: 400; }
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.6rem 1rem 1.4rem 2.6rem; /* espaço da lombada à esquerda */
+  background-color: var(--papel-escuro);
+  background-image:
+    radial-gradient(rgba(226, 140, 162, 0.2) 1.5px, transparent 1.8px); /* padrão de pontos */
+  background-size: 26px 26px;
+  box-shadow: 4px 0 14px rgba(91, 64, 68, 0.1);
+}
+/* lombada xadrez */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 1.3rem;
+  background-color: var(--xadrez-base);
+  background-image:
+    linear-gradient(90deg, var(--xadrez) 50%, transparent 50%),
+    linear-gradient(var(--xadrez) 50%, transparent 50%);
+  background-size: 12px 12px;
+  border-right: 2px dotted rgba(155, 60, 86, 0.3); /* costura */
+}
+
+.grupo { margin-bottom: 0.4rem; }
+.grupo-titulo {
+  display: inline-block;
+  font-family: var(--f-maquina);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--texto);
+  background: var(--bege);
+  padding: 0.15rem 0.5rem;
+  margin: 0 0 0.4rem 0.3rem;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 1px 2px rgba(91, 64, 68, 0.15);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.42rem 0.7rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.15s, transform 0.15s;
+}
+.nav-item:hover { background: rgba(255, 255, 255, 0.55); transform: translateX(2px); }
+.nav-item.ativo {
+  font-weight: 800;
+  color: var(--vinho);
+  box-shadow: 0 1px 3px rgba(91, 64, 68, 0.12);
+}
+.nav-item .laco { margin-left: auto; width: 1.3rem; height: 1.3rem; font-size: 0.95rem; }
+.nav-emoji { width: 1.6rem; text-align: center; }
+
+/* ícones: PNG em public/icones/<nome>.png (se não existir, mostra o emoji) */
+.icone { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; line-height: 1; }
+.icone img { width: 100%; height: 100%; object-fit: contain; }
+.icone-titulo { width: 2.2rem; height: 2.2rem; vertical-align: -0.3rem; font-style: normal; }
+.btn-icone .icone { width: 1.8rem; height: 1.8rem; }
+.btn-sair .icone { width: 1.1rem; height: 1.1rem; vertical-align: -0.2rem; }
+
+.btn-sair {
+  margin-top: auto;
+  align-self: flex-start;
+  background: var(--papel);
+  border: 1.5px dashed var(--rosa-antigo);
+  border-radius: 3px;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--f-maquina);
+  font-size: 0.85rem;
+  color: var(--texto);
+  cursor: pointer;
+  transform: rotate(-1deg);
+}
+.btn-sair:hover { background: var(--rosa); }
+
+.creditos {
+  font-size: 0.7rem;
+  color: var(--suave);
+  margin-top: -0.4rem;
+}
+.creditos:hover { color: var(--vinho); text-decoration: underline; }
+
+.conteudo { flex: 1; padding: 2.4rem 2rem; position: relative; min-width: 0; }
+.pagina { max-width: 900px; margin: 0 auto; }
+
+.topo-mobile { display: none; }
+.fundo-escuro { display: none; }
+
+/* cabeçalho das páginas */
+.cabecalho { margin-bottom: 1.8rem; }
+.cabecalho .etiqueta { margin-bottom: 0.6rem; transform: rotate(-1deg); }
+.cabecalho .mao { color: var(--malva); margin: 0; }
+
+/* ============ INÍCIO ============ */
+.grade-atalhos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 1.6rem 1.2rem;
+  margin-top: 1rem;
+}
+/* .atalho segura a fita; .recorte (dentro) é o papel rasgado */
+.atalho {
+  position: relative;
+  transform: rotate(var(--giro, 0deg));
+  transition: transform 0.18s;
+  /* Sem filter: drop-shadow aqui: combinado ao clip-path de .rasgado e ao rotate,
+     o Chrome pode deixar de renderizar o texto do recorte. A sombra é feita no ::after. */
+}
+/* sombra do recorte: retângulo desfocado atrás dele */
+.atalho::after {
+  content: '';
+  position: absolute;
+  inset: 6px 4px -3px 4px;
+  z-index: -1;
+  border-radius: 4px;
+  background: rgba(91, 64, 68, 0.13);
+  filter: blur(5px);
+}
+.atalho:nth-child(4n + 1) { --giro: -2deg; }
+.atalho:nth-child(4n + 2) { --giro: 1.5deg; --fita-giro: 4deg; }
+.atalho:nth-child(4n + 3) { --giro: -1deg; --fita-giro: -6deg; }
+.atalho:nth-child(4n + 4) { --giro: 2.2deg; --fita-giro: 2deg; }
+.atalho:nth-child(3n + 2) { --fita-cor: rgba(210, 180, 225, 0.7); }
+.atalho:nth-child(3n) { --fita-cor: rgba(232, 196, 186, 0.8); }
+.atalho:hover { transform: rotate(0deg) translateY(-4px) scale(1.03); }
+.recorte {
+  padding: 1.5rem 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: var(--f-mao);
+  font-size: 1.45rem;
+  line-height: 1;
+  color: var(--texto);
+}
+.atalho-emoji { font-size: 1.7rem; }
+.atalho-emoji.icone { width: 2.6rem; height: 2.6rem; }
+
+/* ============ EM CONSTRUÇÃO ============ */
+.aviso-construcao { padding: 2.2rem 1.6rem; display: flex; align-items: center; gap: 1rem; }
+.aviso-construcao .mao { margin: 0; }
+
+/* =========================================================
+   TO-DO
+   ========================================================= */
+.nova-tarefa { padding: 1.4rem 1.4rem 1.2rem; margin-bottom: 1.6rem; }
+.nova-titulo { font-size: 1.1rem; }
+.nova-titulo::placeholder { font-size: 1.5rem; }
+.nova-opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  margin-top: 0.9rem;
+}
+.nova-opcoes label { display: flex; align-items: center; gap: 0.5rem; }
+.nova-opcoes input[type='date'] { width: auto; padding: 0.3rem; font-size: 0.9rem; }
+.nova-opcoes .btn { margin-left: auto; }
+.escolha-prioridade { display: flex; gap: 0.35rem; }
+
+/* etiquetas de prioridade (também funcionam como botões) */
+.prioridade {
+  font-family: var(--f-maquina);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  border: 1.5px solid transparent;
+  border-radius: 2px;
+  padding: 0.12rem 0.5rem;
+  cursor: pointer;
+  color: var(--texto);
+  box-shadow: 0 1px 2px rgba(91, 64, 68, 0.12);
+}
+.prioridade-alta { background: var(--vinho); color: var(--papel); }
+.prioridade-media { background: var(--rosa); }
+.prioridade-baixa { background: #fff; box-shadow: inset 0 0 0 1px var(--borda), 0 1px 2px rgba(91, 64, 68, 0.12); }
+.escolha-prioridade .prioridade { opacity: 0.45; }
+.escolha-prioridade .prioridade.escolhida { opacity: 1; border-color: var(--vinho); }
+
+/* etiquetas das listas do to-do */
+.barra-listas { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1.4rem; }
+.chip-lista {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-family: var(--f-mao);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--texto);
+  border: none;
+  border-radius: 3px;
+  padding: 0.3rem 0.8rem 0.35rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(91, 64, 68, 0.15);
+  transition: transform 0.15s;
+}
+.chip-lista:not([class*='bg-']) { background-color: var(--papel); } /* "tudo" e "+ lista" */
+.chip-lista button { font: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; }
+.chip-lista:nth-child(odd) { transform: rotate(-1.5deg); }
+.chip-lista:nth-child(even) { transform: rotate(1.2deg); }
+.chip-lista:hover { transform: rotate(0) translateY(-2px); }
+.chip-lista.ativa { outline: 2px solid var(--vinho); outline-offset: 1px; color: var(--vinho); font-weight: 600; }
+.chip-lista.chip-nova { background: transparent; border: 1.5px dashed var(--rosa-antigo); box-shadow: none; color: var(--malva); }
+.chip-apagar { font-family: var(--f-texto) !important; font-size: 0.75rem !important; margin-left: 0.3rem; opacity: 0.6; }
+.chip-apagar:hover { opacity: 1; color: var(--vinho) !important; }
+.chip-input { width: 9rem; font-family: var(--f-mao); font-size: 1.2rem; padding: 0.2rem 0.4rem; }
+
+.tag-lista {
+  font-family: var(--f-mao);
+  font-size: 1.05rem;
+  line-height: 1;
+  padding: 0.12rem 0.5rem 0.18rem;
+  border-radius: 2px;
+}
+.nova-opcoes select { width: auto; padding: 0.3rem; font-size: 0.9rem; background: transparent; }
+
+/* abas de filtro, como divisórias de caderno */
+.abas { display: flex; flex-wrap: wrap; gap: 0.3rem; padding-left: 0.6rem; }
+.aba {
+  font-family: var(--f-maquina);
+  font-size: 0.82rem;
+  color: var(--texto);
+  background: var(--bege);
+  border: none;
+  border-radius: 6px 6px 0 0;
+  padding: 0.45rem 0.9rem 0.35rem;
+  cursor: pointer;
+  opacity: 0.75;
+  transform: translateY(3px);
+  transition: transform 0.15s, opacity 0.15s;
+}
+.aba:hover { opacity: 1; transform: translateY(0); }
+.aba.ativa { background: var(--papel); opacity: 1; transform: translateY(0); color: var(--vinho); }
+.aba.alerta .aba-numero { background: var(--vinho); color: var(--papel); }
+.aba-numero {
+  display: inline-block;
+  min-width: 1.3rem;
+  margin-left: 0.2rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.lista-tarefas {
+  border-top-left-radius: 0;
+  padding: 0.4rem 1.2rem 1rem 3rem;
+  min-height: 8rem;
+  /* apenas a linha de margem; as pautas não alinhariam com a altura variável das tarefas */
+  background-image: linear-gradient(90deg, transparent 2.2rem, rgba(201, 110, 135, 0.55) 2.2rem, rgba(201, 110, 135, 0.55) calc(2.2rem + 1px), transparent calc(2.2rem + 1px));
+}
+.lista-tarefas ul { list-style: none; margin: 0; padding: 0; }
+.lista-tarefas .vazio { color: var(--suave); padding: 1.6rem 0; margin: 0; }
+.lista-tarefas .erro { padding-top: 0.6rem; }
+
+.tarefa {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed rgba(201, 110, 135, 0.25);
+}
+.tarefa:last-child { border-bottom: none; }
+
+/* caixa de conclusão arredondada */
+.checkbox {
+  flex-shrink: 0;
+  width: 1.45rem;
+  height: 1.45rem;
+  margin-top: 0.1rem;
+  border: 2px solid var(--rosa-antigo);
+  border-radius: 48% 52% 50% 50% / 52% 48% 52% 48%;
+  background: var(--papel);
+  color: var(--papel);
+  font-weight: 800;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, transform 0.1s;
+}
+.checkbox:hover { background: var(--rosa); }
+.checkbox:active { transform: scale(0.9); }
+.tarefa.feita .checkbox { background: var(--vinho); border-color: var(--vinho); }
+
+.tarefa-corpo { flex: 1; min-width: 0; }
+.tarefa-titulo { cursor: text; overflow-wrap: anywhere; }
+.tarefa.feita .tarefa-titulo {
+  color: var(--suave);
+  text-decoration: line-through;
+  text-decoration-color: var(--rosa-antigo);
+  text-decoration-thickness: 2px;
+}
+.tarefa-editar { padding: 0.1rem 0.2rem; }
+.tarefa-detalhes { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.6rem; margin-top: 0.15rem; }
+
+.prazo {
+  position: relative;
+  font-family: var(--f-mao);
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--malva);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.prazo.atrasada { color: var(--vinho); font-weight: 600; }
+.prazo.atrasada::after { content: ' · atrasada'; }
+/* input de data invisível sobre o texto do prazo */
+.prazo input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+}
+.tarefa.feita .tarefa-detalhes { opacity: 0.55; }
+
+.tarefa-apagar {
+  background: none;
+  border: none;
+  color: var(--suave);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.2rem 0.3rem;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+.tarefa:hover .tarefa-apagar { opacity: 1; }
+.tarefa-apagar:hover { color: var(--vinho); }
+@media (hover: none) { .tarefa-apagar { opacity: 0.6; } } /* telas de toque não têm hover: botão sempre visível */
+
+/* =========================================================
+   PEÇAS COMPARTILHADAS (ui.jsx, Colecao.jsx)
+   ========================================================= */
+.pagina-larga { max-width: 1150px; }
+.pequeno { font-size: 0.82rem; }
+.atrasada { color: var(--vinho) !important; font-weight: 600; }
+.alerta { color: var(--vinho); margin: 0.3rem 0 0; }
+.aviso { color: var(--vinho); margin: 0 0 0.6rem; }
+.esmaecido { opacity: 0.55; }
+
+.cabecalho-linha { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.cabecalho-linha h1 { margin: 0; }
+
+.link-acao {
+  background: none;
+  border: none;
+  padding: 0.15rem 0.2rem;
+  font-family: var(--f-maquina);
+  font-size: 0.78rem;
+  color: var(--malva);
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+.link-acao:hover { color: var(--vinho); }
+.link-acao.perigo { color: var(--vinho); }
+.link-acao:disabled { opacity: 0.5; cursor: default; }
+.link-simples { background: none; border: none; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+.link-simples:hover { color: var(--vinho); }
+
+.bolinha { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; flex-shrink: 0; vertical-align: middle; box-shadow: inset 0 0 0 1px rgba(91, 64, 68, 0.15); }
+
+/* fileira de etiquetas de filtro */
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font-family: var(--f-maquina);
+  font-size: 0.78rem;
+  color: var(--texto);
+  background-color: var(--papel);
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  padding: 0.28rem 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(91, 64, 68, 0.12);
+}
+.chip:hover { border-color: var(--rosa-antigo); }
+.chip.ativa { border-color: var(--vinho); color: var(--vinho); font-weight: 700; }
+.chip-numero { margin-left: 0.35rem; opacity: 0.6; font-size: 0.72rem; }
+.cabecalho + .chips, .erro + .chips { margin-bottom: 1.4rem; }
+
+.barra-ferramentas { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.4rem; }
+.busca { max-width: 320px; }
+
+.escolher-cor { display: flex; gap: 0.45rem; flex-wrap: wrap; padding-top: 0.3rem; }
+.bolinha-cor { width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 2px solid var(--papel); box-shadow: 0 0 0 1px var(--borda); cursor: pointer; }
+.bolinha-cor.escolhida { box-shadow: 0 0 0 2px var(--vinho); }
+
+.estrelas { display: inline-flex; gap: 0.1rem; }
+.estrelas button { background: none; border: none; padding: 0; font-size: 1.4rem; line-height: 1; color: var(--borda); cursor: pointer; }
+.estrelas button.cheia { color: var(--rosa-antigo); }
+.estrelas button:disabled { cursor: default; }
+.estrelas.pequeno button { font-size: 1.05rem; }
+
+.progresso { flex: 1; min-width: 60px; height: 0.55rem; background: rgba(255, 255, 255, 0.7); border-radius: 999px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(201, 110, 135, 0.25); }
+.progresso-barra { height: 100%; border-radius: 999px; transition: width 0.3s; }
+
+.status-chip {
+  font-family: var(--f-maquina);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 2px;
+  padding: 0.18rem 0.55rem;
+  cursor: pointer;
+  color: var(--texto);
+  box-shadow: 0 1px 2px rgba(91, 64, 68, 0.15);
+  white-space: nowrap;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.4rem; }
+.tag { font-family: var(--f-maquina); font-size: 0.72rem; color: var(--malva); }
+
+/* janela (modal) */
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(91, 64, 68, 0.3);
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  overflow-y: auto;
+}
+.modal { width: 100%; max-width: 480px; padding: 1.8rem 1.6rem 1.4rem; margin: auto; }
+.modal-largo { max-width: 720px; }
+.modal h2 { padding-right: 2rem; }
+.modal-fechar { position: absolute; top: 0.8rem; right: 0.9rem; background: none; border: none; font-size: 1rem; color: var(--suave); cursor: pointer; }
+.modal-fechar:hover { color: var(--vinho); }
+.modal-acoes { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.modal-acoes .link-acao.perigo { margin-right: auto; }
+
+/* formulários */
+.formulario { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.2rem; }
+.formulario .modal-acoes { grid-column: 1 / -1; }
+.campo { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.campo-largo { grid-column: 1 / -1; }
+.campo .etiqueta { align-self: flex-start; }
+textarea { resize: vertical; border: 1.5px dashed var(--borda); border-radius: 4px; padding: 0.6rem; background: rgba(255, 255, 255, 0.5); line-height: 1.5; }
+textarea:focus { border: 1.5px solid var(--rosa-antigo); }
+select { cursor: pointer; }
+.caixa { width: 1.3rem; height: 1.3rem; accent-color: var(--vinho); }
+.input-pequeno { font-size: 0.9rem; padding: 0.3rem 0.2rem; margin-top: 0.2rem; }
+
+/* coleção: cartões */
+.colecao-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.6rem 1.2rem; align-items: start; }
+.colecao-lista { display: flex; flex-direction: column; gap: 1rem; }
+.cartao { padding: 1.3rem 1.2rem 0.8rem; display: flex; flex-direction: column; }
+.cartao:nth-child(3n + 2) { --fita-cor: rgba(210, 180, 225, 0.7); }
+.cartao:nth-child(3n) { --fita-cor: rgba(232, 196, 186, 0.8); }
+.cartao h3 { font-size: 1.15rem; margin: 0 0 0.25rem; }
+.cartao-corpo { cursor: pointer; flex: 1; }
+.cartao-rodape { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px dashed rgba(201, 110, 135, 0.3); }
+.cartao-rodape .status-chip { margin-right: auto; }
+.cartao-texto { margin: 0.3rem 0; font-size: 0.92rem; white-space: pre-line; overflow-wrap: anywhere; }
+.cartao-texto.mao { font-size: 1.2rem; }
+.cartao-linha { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.cartao-linha.entre { justify-content: space-between; flex-wrap: nowrap; }
+.preco { font-size: 1.35rem; color: var(--vinho); }
+.link-externo, .link-dominio { font-family: var(--f-maquina); font-size: 0.75rem; color: var(--malva); }
+.link-titulo { font-weight: 700; color: var(--vinho); margin-right: 0.6rem; }
+.link-titulo:hover { text-decoration: underline; }
+.coracao { background: none; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0; transition: transform 0.15s; }
+.coracao:hover { transform: scale(1.12); }
+.coracao.cheio .enfeite { animation: batida 0.35s ease; }
+@keyframes batida { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+
+/* enfeites (coração e flor) dentro do texto */
+.enfeite { display: inline-block; height: 0.95em; width: auto; vertical-align: -0.1em; margin: 0 0.12em; }
+.btn .enfeite { filter: brightness(0) invert(1); } /* em botões escuros, o ícone fica branco */
+
+/* receita aberta */
+.receita-colunas { display: grid; grid-template-columns: minmax(200px, 1fr) 2fr; gap: 1.4rem; align-items: start; }
+.receita-ingredientes { padding: 1rem 1rem 1rem 3rem; }
+.receita-ingredientes ul { margin: 0.4rem 0 0; padding-left: 1rem; }
+
+/* texto em markdown */
+.markdown { line-height: 1.65; overflow-wrap: anywhere; }
+.markdown h2, .markdown h3, .markdown h4 { margin: 1rem 0 0.4rem; }
+.markdown p { margin: 0.5rem 0; }
+.markdown ul, .markdown ol { padding-left: 1.4rem; }
+.markdown li.caixinha { list-style: none; margin-left: -1.2rem; }
+.markdown li.caixinha.feita { color: var(--suave); text-decoration: line-through; }
+.markdown blockquote { margin: 0.6rem 0; padding: 0.3rem 0.9rem; border-left: 3px solid var(--rosa-antigo); font-family: var(--f-mao); font-size: 1.3rem; color: var(--malva); }
+.markdown pre { background: var(--lavanda); padding: 0.8rem; border-radius: 4px; overflow-x: auto; }
+.markdown pre code { background: none; padding: 0; }
+.markdown a { color: var(--vinho); text-decoration: underline; }
+.markdown hr { border: none; border-top: 2px dashed var(--rosa-antigo); margin: 1rem 0; }
+
+/* =========================================================
+   INÍCIO: painel do dia
+   ========================================================= */
+.painel { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.6rem 1.2rem; margin-bottom: 2.4rem; align-items: start; }
+.painel-bloco { padding: 1.4rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.painel-bloco.pautado { padding-left: 3rem; }
+.painel-titulo { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.painel-titulo .etiqueta, .painel-titulo .link-acao { white-space: nowrap; }
+.painel-bloco .btn, .painel-bloco > .etiqueta { align-self: flex-start; }
+.agenda-item .mao { white-space: nowrap; }
+.agenda-item > span:nth-child(2) { flex: 1; min-width: 0; }
+.painel + .grade-atalhos { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+.painel + .grade-atalhos .recorte { font-size: 1.25rem; padding: 1.2rem 0.9rem 1rem; }
+
+/* listas com caixa de conclusão (Início, Metas) */
+.etapas { list-style: none; margin: 0.3rem 0; padding: 0; }
+.etapas li { display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0; }
+.etapas li > span:first-of-type { flex: 1; }
+.etapas li.feita > span:first-of-type { text-decoration: line-through; text-decoration-color: var(--rosa-antigo); color: var(--suave); }
+.etapas li.feita .checkbox { background: var(--vinho); border-color: var(--vinho); }
+.etapas .checkbox { width: 1.2rem; height: 1.2rem; margin: 0; font-size: 0.7rem; }
+
+/* =========================================================
+   HÁBITOS
+   ========================================================= */
+:root { --lavanda-forte: #b7a3d6; --pessego-forte: #eaa48f; --salvia-forte: #a9b88f; } /* cores da paleta anterior */
+.grade-habitos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.8rem 1.2rem; }
+.cartao-habito { padding: 1.4rem 1.2rem 1.2rem; }
+.cartao-habito h3 { margin: 0; }
+.sequencia { display: flex; align-items: baseline; gap: 0.4rem; margin: 0.4rem 0 0.8rem; flex-wrap: wrap; }
+.sequencia-numero { font-family: var(--f-titulo); font-size: 2.4rem; font-style: italic; color: var(--cor-habito); line-height: 1; }
+.sequencia-semana { margin-left: auto; }
+.semana-habito { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.3rem; margin-bottom: 0.9rem; }
+.dia-habito {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.3rem 0;
+  border: 1.5px dashed var(--borda);
+  border-radius: 6px;
+  background: var(--papel);
+  font-family: var(--f-maquina);
+  font-size: 0.65rem;
+  color: var(--suave);
+  cursor: pointer;
+}
+.dia-habito .dia-numero { font-family: var(--f-texto); font-size: 0.95rem; font-weight: 700; color: var(--texto); }
+.dia-habito.hoje { border: 1.5px solid var(--vinho); }
+.dia-habito.feito { background: var(--cor-habito); border-style: solid; border-color: var(--cor-habito); color: var(--papel); }
+.dia-habito.feito .dia-numero { color: #fff; }
+.dia-habito:disabled { opacity: 0.4; cursor: default; }
+.mapa-calor { display: flex; gap: 3px; overflow-x: auto; }
+.mapa-coluna { display: flex; flex-direction: column; gap: 3px; }
+.quadradinho { width: 11px; height: 11px; border-radius: 2px; background: rgba(201, 110, 135, 0.12); }
+.quadradinho.feito { background: var(--cor-habito); }
+.quadradinho.futuro { visibility: hidden; }
+.arquivados { margin-top: 2rem; }
+.arquivado-linha { display: flex; gap: 0.8rem; align-items: center; padding: 0.3rem 0; }
+
+/* =========================================================
+   AGENDA
+   ========================================================= */
+.agenda-barra { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.agenda-nav { display: flex; align-items: center; gap: 0.4rem; }
+.agenda-nav .btn-icone { font-size: 1.6rem; padding: 0 0.4rem; }
+.agenda-periodo { margin: 0; min-width: 11rem; text-align: center; font-size: 1.5rem; }
+.agenda-layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.4rem; align-items: start; }
+.calendario { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; padding: 0.8rem; }
+.calendario-cabeca { font-family: var(--f-maquina); font-size: 0.72rem; text-align: center; color: var(--suave); padding-bottom: 0.3rem; }
+.calendario-dia {
+  min-height: 5.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  padding: 0.3rem;
+  border: 1px solid rgba(201, 110, 135, 0.18);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  min-width: 0;
+}
+.calendario.semana .calendario-dia { min-height: 7rem; }
+
+/* pontos coloridos nos dias do calendário */
+.calendario-pontos { display: flex; flex-wrap: wrap; gap: 3px; margin-top: auto; padding: 0 0.15rem 0.1rem; }
+.calendario.semana .calendario-pontos { margin-top: 0.4rem; }
+.ponto {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(91, 64, 68, 0.2);
+  vertical-align: middle;
+}
+.calendario.semana .ponto { width: 1.1rem; height: 1.1rem; }
+.agenda-dia .agenda-item { align-items: flex-start; }
+.agenda-dia .agenda-item > .ponto { margin-top: 0.45rem; }
+.agenda-item-texto .tipo-etiqueta { display: table; margin-top: 0.2rem; }
+.ponto-grande { width: 1.1rem; height: 1.1rem; }
+.ponto-avaliacao { border-radius: 2px; transform: rotate(45deg) scale(0.85); }          /* losango = prova/entrega */
+.ponto-tarefa { background: transparent !important; box-shadow: inset 0 0 0 1.5px var(--rosa-antigo); } /* contorno = to-do */
+
+.legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 0.9rem; padding: 0 0.3rem; font-size: 0.85rem; }
+.legenda-item { display: inline-flex; align-items: center; gap: 0.35rem; }
+.form-legenda { display: flex; flex-direction: column; gap: 0.7rem; }
+.legenda-linha { display: grid; grid-template-columns: auto 4.5rem 1fr; align-items: center; gap: 0.6rem; }
+.legenda-cor { font-family: var(--f-maquina); font-size: 0.8rem; color: var(--suave); }
+.escolher-cor-agenda { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.cor-agenda {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+  border: 1.5px solid var(--borda);
+  border-radius: 999px;
+  background: var(--papel);
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--texto);
+  cursor: pointer;
+}
+.cor-agenda.escolhida { border-color: var(--vinho); color: var(--vinho); font-weight: 700; }
+.agenda-notas { display: block; white-space: pre-line; }
+.calendario-dia:hover { background: var(--rosa-claro, #fdeaed); }
+.calendario-dia.fora { opacity: 0.4; }
+.calendario-dia.hoje .calendario-numero { background: var(--vinho); color: var(--papel); }
+.calendario-dia.selecionado { outline: 2px solid var(--rosa-antigo); outline-offset: -1px; }
+.calendario-numero { align-self: flex-start; font-weight: 700; font-size: 0.85rem; padding: 0 0.35rem; border-radius: 999px; }
+.calendario-itens { display: flex; flex-direction: column; gap: 2px; }
+.mini-item { font-size: 0.7rem; line-height: 1.25; padding: 1px 4px; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mini-item.tipo-tarefa { background: transparent !important; border: 1px dashed var(--rosa-antigo); }
+.mais { font-family: var(--f-maquina); font-size: 0.65rem; color: var(--malva); }
+.agenda-dia { padding: 1.3rem 1.1rem 1.1rem 3rem; position: sticky; top: 1rem; }
+.agenda-dia-titulo { font-size: 1.15rem; margin: 0.4rem 0 0.8rem; }
+.agenda-lista { list-style: none; margin: 0 0 0.6rem; padding: 0; }
+.agenda-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; }
+.agenda-item-texto { flex: 1; min-width: 0; }
+.tipo-etiqueta { font-size: 0.62rem; }
+
+/* =========================================================
+   DIÁRIO
+   ========================================================= */
+.diario-layout { display: grid; grid-template-columns: 1fr 280px; gap: 1.6rem; align-items: start; }
+.diario-nav { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.2rem; }
+.diario-nav .btn-icone { font-size: 1.6rem; }
+.diario-nav .btn-icone:disabled { opacity: 0.3; }
+.diario-pagina { padding: 1.8rem 1.6rem 1.2rem; }
+.diario-secao { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.4rem; }
+.diario-secao .etiqueta { align-self: flex-start; }
+.humores { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.humor { font-family: var(--f-mao); font-size: 1.3rem; border: 2px solid transparent; border-radius: 999px; padding: 0.15rem 0.9rem; cursor: pointer; color: var(--texto); opacity: 0.6; }
+.humor.escolhido { opacity: 1; border-color: var(--vinho); }
+.gratidao { font-family: var(--f-mao); font-size: 1.3rem; }
+.diario-texto { min-height: 18rem; border: none; padding: 0.6rem 0.6rem 0.6rem 3rem; font-family: var(--f-mao); font-size: 1.4rem; line-height: 1.75rem; background-color: transparent; }
+.diario-lado { display: flex; flex-direction: column; gap: 1.2rem; }
+.mini-calendario { padding: 1rem; }
+.mini-calendario .agenda-nav { justify-content: space-between; margin-bottom: 0.4rem; }
+.mini-grade { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+.mini-cabeca { font-family: var(--f-maquina); font-size: 0.65rem; color: var(--suave); }
+.mini-dia { aspect-ratio: 1; border: none; border-radius: 50%; background: transparent; font-size: 0.75rem; color: var(--texto); cursor: pointer; padding: 0; }
+.mini-dia.fora { opacity: 0.35; }
+.mini-dia.hoje { font-weight: 800; color: var(--vinho); }
+.mini-dia.selecionado { box-shadow: 0 0 0 2px var(--vinho); }
+.mini-dia:disabled { opacity: 0.25; cursor: default; }
+.recentes { padding: 1rem; }
+.recentes ul { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+.recentes li { padding: 0.2rem 0; font-size: 0.85rem; }
+
+/* =========================================================
+   FACULDADE
+   ========================================================= */
+.grade-materias { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.2rem; margin: 1.4rem 0 1rem; }
+.cartao-materia { padding: 1.2rem; }
+.cartao-materia h3 { margin: 0; }
+.materia-numeros { display: flex; gap: 1.6rem; margin: 0.8rem 0 0.6rem; }
+.materia-numeros > div { display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-start; }
+.numero-grande { font-family: var(--f-titulo); font-size: 2rem; font-style: italic; color: var(--vinho); line-height: 1; }
+.numero-grande small { font-size: 1rem; color: var(--suave); }
+.numero-grande.ruim { color: #b0304e; }
+.contador { display: flex; align-items: center; gap: 0.5rem; }
+.contador button { width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 1.5px solid var(--vinho); background: var(--papel); color: var(--vinho); font-weight: 800; cursor: pointer; line-height: 1; }
+.grade-horario { display: grid; gap: 0.8rem; margin-top: 1.4rem; }
+.horario-dia { display: flex; flex-direction: column; gap: 0.6rem; min-width: 0; }
+.horario-dia .etiqueta { align-self: flex-start; }
+.aula { padding: 0.7rem; display: flex; flex-direction: column; gap: 0.1rem; }
+.lista-avaliacoes { margin-top: 1.4rem; padding: 1.2rem 1.2rem 1rem 3rem; }
+.lista-avaliacoes ul { list-style: none; padding: 0; margin: 0.4rem 0 1rem; }
+.avaliacao { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem 0; flex-wrap: wrap; }
+.avaliacao-nome { flex: 1; min-width: 10rem; }
+.nota-campo { display: flex; align-items: baseline; gap: 0.2rem; }
+.nota-campo input { width: 4rem; text-align: right; padding: 0.2rem; }
+.linha-horario { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.linha-horario select, .linha-horario input[type='time'] { width: auto; }
+.linha-horario input:not([type]) { flex: 1; min-width: 5rem; }
+
+/* =========================================================
+   TÓPICOS
+   ========================================================= */
+.aviso-revisao { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; padding: 1.2rem; margin-bottom: 1.4rem; }
+.grupo-topicos { margin-bottom: 1.6rem; }
+.grupo-topicos-titulo { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+.grupo-topicos-titulo .progresso { max-width: 200px; }
+.lista-topicos { padding: 0.4rem 1rem; }
+.topico { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0; border-bottom: 1px dashed rgba(201, 110, 135, 0.25); flex-wrap: wrap; }
+.topico:last-child { border-bottom: none; }
+.topico-titulo { flex: 1; min-width: 9rem; }
+.topico.dominado .topico-titulo { color: var(--suave); }
+.topico-pct { width: 2.6rem; text-align: right; }
+.deslizante { width: 110px; accent-color: var(--rosa-antigo); padding: 0; border: none; }
+
+/* =========================================================
+   CADERNINHO
+   ========================================================= */
+.caderno-layout { display: grid; grid-template-columns: 270px 1fr; gap: 1.4rem; align-items: start; }
+.caderno-lista { padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+.caderno-lista ul { list-style: none; padding: 0; margin: 0; }
+.filtro-topico { margin: 0; font-size: 0.85rem; }
+.nota-item { width: 100%; display: flex; flex-direction: column; gap: 0.1rem; text-align: left; background: none; border: none; border-radius: 4px; padding: 0.5rem 0.6rem; font: inherit; color: inherit; cursor: pointer; }
+.nota-item:hover { background: var(--rosa); }
+.nota-item.ativa { background: var(--rosa); box-shadow: inset 3px 0 0 var(--vinho); }
+.caderno-editor { padding: 1.6rem 1.5rem 1rem; }
+.caderno-vazio { padding: 3rem; text-align: center; }
+.nota-titulo { font-family: var(--f-titulo); font-style: italic; font-size: 1.7rem; color: var(--vinho); border-bottom-style: dotted; }
+.nota-meta { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin: 0.8rem 0; }
+.nota-meta select { width: auto; font-size: 0.85rem; }
+.nota-meta .chips { margin-left: auto; }
+.nota-texto { width: 100%; min-height: 26rem; font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 0.92rem; line-height: 18px; padding: 0.5rem; border: none; }
+.nota-ver { min-height: 20rem; padding: 0.3rem 0.2rem; }
+
+/* =========================================================
+   METAS
+   ========================================================= */
+.lista-metas { display: flex; flex-direction: column; gap: 1.8rem; margin-top: 1.4rem; }
+.cartao-meta { padding: 1.5rem 1.4rem 1.1rem; }
+.cartao-meta h3 { margin: 0; font-size: 1.3rem; }
+.cartao-meta .cartao-linha { margin: 0.5rem 0 0.9rem; }
+.meta-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; background: rgba(255, 255, 255, 0.55); border-radius: 4px; padding: 0.9rem 1rem; }
+.meta-colunas .etiqueta { margin-top: 0.3rem; }
+
+/* =========================================================
+   ADESIVOS
+   ========================================================= */
+.area-envio { padding: 2rem 1.4rem; text-align: center; cursor: pointer; margin-bottom: 1.4rem; border: 2px dashed var(--rosa-antigo); }
+.area-envio:hover { background-color: var(--rosa-claro, #fdeaed); }
+.area-envio p { margin: 0.2rem 0; }
+.area-envio { margin-bottom: 0.6rem; }
+.opcao-fundo { display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; margin-bottom: 1.4rem; cursor: pointer; }
+.adesivo-item img { background-image: linear-gradient(45deg, rgba(201,110,135,.08) 25%, transparent 25%, transparent 75%, rgba(201,110,135,.08) 75%), linear-gradient(45deg, rgba(201,110,135,.08) 25%, transparent 25%, transparent 75%, rgba(201,110,135,.08) 75%); background-size: 14px 14px; background-position: 0 0, 7px 7px; border-radius: 4px; }
+.como-usar { padding: 1rem 1.2rem 1rem 3rem; margin-bottom: 1.6rem; }
+.como-usar p { margin: 0.4rem 0 0; }
+.icone-inline { width: 1.2rem; height: 1.2rem; vertical-align: -0.25rem; }
+.grade-adesivos { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; }
+.adesivo-item { margin: 0; padding: 0.8rem; background: rgba(255, 255, 255, 0.6); border-radius: 6px; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+.adesivo-item img { width: 100%; height: 100px; object-fit: contain; filter: drop-shadow(0 2px 3px rgba(91, 64, 68, 0.2)); }
+.adesivo-item figcaption { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+/* camada por cima das páginas */
+.camada-adesivos { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+.adesivo-colado { position: absolute; transform-origin: center; user-select: none; touch-action: none; }
+.adesivo-colado img { width: 100%; display: block; filter: drop-shadow(0 2px 3px rgba(91, 64, 68, 0.25)); }
+.camada-adesivos.editando .adesivo-colado { pointer-events: auto; cursor: grab; outline: 1.5px dashed var(--vinho); outline-offset: 4px; }
+.camada-adesivos.editando .adesivo-colado:active { cursor: grabbing; }
+.adesivo-tirar, .adesivo-girar {
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 2px solid var(--papel);
+  background: var(--vinho);
+  color: var(--papel);
+  font-size: 0.65rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  touch-action: none;
+}
+.adesivo-tirar { top: -0.9rem; left: -0.9rem; }
+.adesivo-girar { bottom: -0.9rem; right: -0.9rem; background: var(--dourado); cursor: nwse-resize; }
+.bandeja-adesivos {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1rem;
+  max-width: calc(100vw - 2rem);
+}
+.bandeja-lista { display: flex; gap: 0.4rem; overflow-x: auto; max-width: 60vw; }
+.bandeja-lista button { flex-shrink: 0; width: 3.4rem; height: 3.4rem; border: 1.5px dashed var(--borda); border-radius: 6px; background: var(--papel); cursor: pointer; padding: 0.25rem; }
+.bandeja-lista button:hover { border-color: var(--vinho); }
+.bandeja-lista img { width: 100%; height: 100%; object-fit: contain; }
+.botao-adesivos {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 50;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: none;
+  cursor: pointer;
+  --selo-cor: var(--papel);
+  transition: transform 0.15s;
+}
+.botao-adesivos:hover { transform: rotate(-10deg) scale(1.08); }
+.botao-adesivos .icone { width: 55%; height: 55%; }
+
+.sidebar-rodape { margin-top: auto; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+.sidebar-rodape .btn-sair { margin-top: 0; }
+
+/* =========================================================
+   GRÁFICOS (Graficos.jsx)
+   ========================================================= */
+.graficos-habitos, .graficos-humor-grade { display: grid; grid-template-columns: 3fr 2fr; gap: 1.6rem 1.2rem; margin-top: 2.2rem; align-items: start; }
+.graficos-humor { margin-top: 2.4rem; }
+.graficos-humor .graficos-humor-grade { margin-top: 0.8rem; }
+.grafico-cartao { padding: 1.3rem 1.2rem 1rem; }
+.grafico-titulo { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.grafico-titulo h2 { margin: 0; font-size: 1.4rem; }
+.grafico { position: relative; }
+.grafico-area { position: relative; margin-left: 2.4rem; }
+.grafico-grade { position: absolute; left: 0; right: 0; border-top: 1px dashed rgba(201, 110, 135, 0.22); }
+.grafico-grade span { position: absolute; left: -2.4rem; top: -0.55rem; width: 2rem; text-align: right; font-family: var(--f-maquina); font-size: 0.62rem; color: var(--suave); }
+.grafico-barras { position: absolute; inset: 0; display: flex; align-items: flex-end; }
+.grafico-coluna { position: relative; height: 100%; display: flex; align-items: flex-end; justify-content: center; cursor: default; }
+.grafico-barra { width: 62%; max-width: 26px; border-radius: 4px 4px 0 0; transition: filter 0.15s; }
+.grafico-barra.foco { filter: brightness(0.88); }
+.grafico-dica {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -8px);
+  left: 50%;
+  white-space: nowrap;
+  background: var(--texto);
+  color: var(--papel);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  pointer-events: none;
+}
+.grafico-eixo-x { display: flex; margin-left: 2.4rem; margin-top: 0.3rem; }
+.grafico-eixo-x span { text-align: center; font-family: var(--f-maquina); font-size: 0.6rem; color: var(--suave); overflow: hidden; white-space: nowrap; }
+
+.barras-h { display: flex; flex-direction: column; gap: 0.55rem; }
+.barra-h-linha { display: grid; grid-template-columns: minmax(5rem, 9rem) 1fr 3.6rem; align-items: center; gap: 0.6rem; font-size: 0.88rem; }
+.barra-h-nome { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.barra-h-trilho { height: 0.7rem; background: rgba(201, 110, 135, 0.1); border-radius: 999px; overflow: hidden; }
+.barra-h-valor { height: 100%; border-radius: 999px; }
+.barra-h-texto { font-family: var(--f-maquina); font-size: 0.72rem; color: var(--suave); text-align: right; }
+
+.grafico-humor { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+.humor-eixo-y { display: flex; flex-direction: column; justify-content: space-between; padding: 0.15rem 0; font-family: var(--f-maquina); font-size: 0.62rem; color: var(--suave); text-align: right; min-width: 3.4rem; }
+.humor-area { position: relative; flex: 1; min-width: 0; }
+.humor-area svg { display: block; width: 100%; }
+.humor-grade { stroke: rgba(201, 110, 135, 0.2); stroke-dasharray: 3 4; }
+.humor-linha { fill: none; stroke: var(--malva); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; opacity: 0.7; }
+.humor-ponto { position: absolute; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--papel); pointer-events: none; }
+.humor-ponto.foco { width: 14px; height: 14px; }
+.humor-dica { transform: translate(-50%, -100%); }
+.humor-eixo-x { position: relative; height: 1rem; margin-left: 0; }
+.humor-eixo-x span { position: absolute; transform: translateX(-50%); }
+.humor-resumo { margin: 0.9rem 0 0; }
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+@media (max-width: 760px) {
+  .app { flex-direction: column; }
+  .topo-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 1rem;
+    background: var(--papel-escuro);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 2px 8px rgba(91, 64, 68, 0.08);
+  }
+  /* faixa xadrez abaixo da barra superior */
+  .topo-mobile::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    height: 6px;
+    background-color: var(--xadrez-base);
+    background-image:
+      linear-gradient(90deg, var(--xadrez) 50%, transparent 50%),
+      linear-gradient(var(--xadrez) 50%, transparent 50%);
+    background-size: 6px 6px;
+  }
+  .topo-mobile .logo-sub { display: none; }
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 40;
+    transform: translateX(-105%);
+    transition: transform 0.25s;
+  }
+  .sidebar.aberta { transform: translateX(0); }
+  .fundo-escuro {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(91, 64, 68, 0.28);
+    z-index: 30;
+  }
+  .conteudo { padding: 1.6rem 1.1rem; }
+  h1 { font-size: 1.8rem; }
+  .grade-atalhos { grid-template-columns: repeat(2, 1fr); gap: 1.4rem 1rem; }
+  .nova-opcoes .btn { width: 100%; margin-left: 0; }
+  .formulario { grid-template-columns: 1fr; }
+  .graficos-habitos, .graficos-humor-grade { grid-template-columns: 1fr; }
+  .grafico-eixo-x.muitos span:nth-child(even) { visibility: hidden; } /* em telas estreitas, exibe rótulos alternados */
+  .agenda-layout, .diario-layout, .caderno-layout, .receita-colunas, .meta-colunas { grid-template-columns: 1fr; }
+  .agenda-dia, .caderno-lista { position: static; max-height: none; }
+  .calendario { padding: 0.4rem; gap: 2px; }
+  .calendario-dia { min-height: 3.4rem; padding: 0.15rem; }
+  .calendario.semana .calendario-dia { min-height: 5rem; }
+  .ponto { width: 0.6rem; height: 0.6rem; }
+  .calendario-pontos { gap: 2px; }
+  .grade-horario { grid-template-columns: 1fr !important; }
+  .bandeja-lista { max-width: 45vw; }
+  .painel-bloco.pautado { padding-left: 2.6rem; }
+  .lista-tarefas { padding-left: 2.6rem; padding-right: 0.8rem; }
+}
