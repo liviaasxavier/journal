@@ -60,7 +60,7 @@ export default function Adesivos() {
 
   return (
     <div className="pagina">
-      <Cabecalho icone="adesivos" emoji="🌸" etiqueta="adesivos" titulo="Adesivos" frase="decora tudo do seu jeitinho ♡" />
+      <Cabecalho icone="adesivos" emoji="🌸" etiqueta="adesivos" titulo="Adesivos" frase="para decorar!" />
       <Erro>{erro || adesivos.erro}</Erro>
 
       <div

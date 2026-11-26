@@ -21,8 +21,8 @@ export default function Login() {
   return (
     <div className="tela-centro">
       <form className="card pautado fita login" onSubmit={entrar}>
-        <h1>oii!</h1>
-        <p className="mao">{enfeitar('entre no seu journal ♡')}</p>
+        <h1>oii</h1>
+        <p className="mao">{enfeitar('entre no seu journal! ♡')}</p>
         <input type="email" placeholder="e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
         {erro && <p className="erro">{erro}</p>}

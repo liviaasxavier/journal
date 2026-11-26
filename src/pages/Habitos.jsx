@@ -27,7 +27,7 @@ export default function Habitos() {
 
   return (
     <div className="pagina">
-      <Cabecalho icone="habitos" emoji="🔁" etiqueta="habit tracker" titulo="Hábitos" frase="um pouquinho todo dia ♡">
+      <Cabecalho icone="habitos" emoji="🔁" etiqueta="habit tracker" titulo="Hábitos" frase="um pouquinho todo dia">
         <button className="btn" onClick={() => setEditando('novo')}>
           + hábito
         </button>

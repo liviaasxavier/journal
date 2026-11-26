@@ -30,7 +30,7 @@ export default function Diario() {
 
   return (
     <div className="pagina pagina-larga">
-      <Cabecalho icone="diario" emoji="📔" etiqueta="querido diário" titulo="Diário" frase="como foi o dia? ♡" />
+      <Cabecalho icone="diario" emoji="📔" etiqueta="querido diário" titulo="Diário" frase="como foi o dia?" />
       <Erro>{diario.erro}</Erro>
 
       <div className="diario-layout">

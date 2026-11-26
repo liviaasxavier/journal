@@ -112,7 +112,7 @@ export default function Tarefas() {
         <h1>
           <Icone nome="todo" emoji="✅" className="icone-titulo" /> Tarefas
         </h1>
-        <p className="mao">{enfeitar('uma coisinha de cada vez ♡')}</p>
+        <p className="mao">{enfeitar('uma coisinha de cada vez')}</p>
       </header>
 
       <BarraListas
@@ -148,7 +148,7 @@ export default function Tarefas() {
         {carregando ? (
           <p className="mao vazio">carregando…</p>
         ) : visiveis.length === 0 ? (
-          <p className="mao vazio">{enfeitar(filtro === 'concluidas' ? 'nada feito ainda… bora? ♡' : 'nada por aqui ✿')}</p>
+          <p className="mao vazio">{enfeitar(filtro === 'concluidas' ? 'nada feito ainda…' : 'nada por aqui ✿')}</p>
         ) : (
           <ul>
             {visiveis.map((t) => (

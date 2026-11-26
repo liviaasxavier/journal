@@ -49,7 +49,7 @@ export default function Inicio() {
         <h1>
           {s.texto}, {MEU_NOME}! <Icone nome={s.icone} emoji={s.emoji} className="icone-titulo" />
         </h1>
-        <p className="mao">{enfeitar('o que vamos fazer hoje? ♡')}</p>
+        <p className="mao">{enfeitar('o que vamos fazer hoje?')}</p>
       </header>
 
       <div className="painel">

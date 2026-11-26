@@ -37,7 +37,7 @@ export default function Metas() {
 
   return (
     <div className="pagina">
-      <Cabecalho icone="metas" emoji="🎯" etiqueta="metas" titulo="Metas" frase="sonhos com passinhos ♡">
+      <Cabecalho icone="metas" emoji="🎯" etiqueta="metas" titulo="Metas" frase="sonhos com passinhos">
         <button className="btn" onClick={() => setEditando('nova')}>
           + meta
         </button>
@@ -56,7 +56,7 @@ export default function Metas() {
       {metas.carregando ? (
         <Vazio>carregando…</Vazio>
       ) : visiveis.length === 0 ? (
-        <Vazio>{filtro === 'ativas' ? 'qual é o próximo sonho? ✿' : 'ainda nenhuma… mas vai ter ♡'}</Vazio>
+        <Vazio>{filtro === 'ativas' ? 'qual é a próxima?' : 'ainda nenhuma…'}</Vazio>
       ) : (
         <div className="lista-metas">
           {visiveis.map((m) => (

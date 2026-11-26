@@ -45,7 +45,7 @@ export default function Caderninho() {
 
   return (
     <div className="pagina pagina-larga">
-      <Cabecalho icone="caderninho" emoji="📓" etiqueta="caderninho de estudos" titulo="Caderninho" frase="anota tudo, amiga ♡">
+      <Cabecalho icone="caderninho" emoji="📓" etiqueta="caderninho de estudos" titulo="Caderninho" frase="anota anota..">
         <button className="btn" onClick={novaNota}>
           + nota
         </button>

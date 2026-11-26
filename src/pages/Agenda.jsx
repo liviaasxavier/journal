@@ -103,7 +103,7 @@ export default function Agenda() {
 
   return (
     <div className="pagina pagina-larga">
-      <Cabecalho icone="agenda" emoji="📅" etiqueta="agenda" titulo="Agenda" frase="um dia de cada vez ♡">
+      <Cabecalho icone="agenda" emoji="📅" etiqueta="agenda" titulo="Agenda" frase="um dia de cada vez">
         <button className="btn" onClick={() => setEditando({ novo: true, data: selecionado })}>
           + compromisso
         </button>

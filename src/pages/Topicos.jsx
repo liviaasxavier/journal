@@ -48,7 +48,7 @@ export default function Topicos() {
 
   return (
     <div className="pagina">
-      <Cabecalho icone="topicos" emoji="📚" etiqueta="tópicos para estudar" titulo="Tópicos" frase="devagar e sempre ♡">
+      <Cabecalho icone="topicos" emoji="📚" etiqueta="tópicos para estudar" titulo="Tópicos" frase="devagar e sempre">
         <button className="btn" onClick={() => setEditando({ novo: true, materia_id: materiaFiltro === 'tudo' ? '' : materiaFiltro })}>
           + tópico
         </button>

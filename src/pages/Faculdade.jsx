@@ -45,7 +45,7 @@ export default function Faculdade() {
 
   return (
     <div className="pagina pagina-larga">
-      <Cabecalho icone="faculdade" emoji="🎓" etiqueta="painel da faculdade" titulo="Faculdade" frase="bora passar em tudo ♡">
+      <Cabecalho icone="faculdade" emoji="🎓" etiqueta="painel da faculdade" titulo="Faculdade" frase="matérias e horários">
         <button className="btn" onClick={() => (aba === 'avaliacoes' ? setEditandoAvaliacao({ nova: true }) : setEditandoMateria('nova'))}>
           {aba === 'avaliacoes' ? '+ avaliação' : '+ matéria'}
         </button>
